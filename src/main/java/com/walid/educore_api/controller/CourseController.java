@@ -3,6 +3,7 @@ package com.walid.educore_api.controller;
 import com.walid.educore_api.dto.request.CreateCourseRequest;
 import com.walid.educore_api.dto.response.CourseResponse;
 import com.walid.educore_api.service.CourseService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ public class CourseController {
     }
 
     @PostMapping
-    public CourseResponse createCourse(@RequestBody CreateCourseRequest request) {
+    public CourseResponse createCourse(@Valid @RequestBody CreateCourseRequest request) {
 
         return courseService.createCourse(request);
 
