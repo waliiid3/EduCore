@@ -4,6 +4,7 @@ import com.walid.educore_api.dto.request.CreateCourseRequest;
 import com.walid.educore_api.dto.response.CourseResponse;
 import com.walid.educore_api.service.CourseService;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,6 +41,14 @@ public class CourseController {
             @Valid @RequestBody CreateCourseRequest request
     ) {
         return courseService.updateCourse(id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCourse(@PathVariable Long id) {
+
+        courseService.deleteCourse(id);
+
+        return ResponseEntity.noContent().build();
     }
 
 }

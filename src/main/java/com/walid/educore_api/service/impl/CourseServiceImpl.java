@@ -84,6 +84,14 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public void deleteCourse(Long id) {
 
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Course with ID " + id + " not found"
+                        )
+                );
+
+        courseRepository.delete(course);
     }
 
     private CourseResponse mapToCourseResponse(Course course) {
