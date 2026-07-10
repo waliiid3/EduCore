@@ -34,4 +34,12 @@ public class CourseController {
         return courseService.getCourseById(id);
     }
 
+    @PutMapping("/{id}")
+    public CourseResponse updateCourse(
+            @PathVariable Long id,
+            @Valid @RequestBody CreateCourseRequest request
+    ) {
+        return courseService.updateCourse(id, request);
+    }
+
 }
