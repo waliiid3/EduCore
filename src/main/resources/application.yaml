@@ -1,3 +1,18 @@
 spring:
-  application:
-    name: educore-api
+  datasource:
+    url: jdbc:postgresql://localhost:5432/educore_db
+    username: postgres
+    password: "@root"
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    show-sql: true
+
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8080
