@@ -3,6 +3,7 @@ package com.walid.educore_api.service.impl;
 import com.walid.educore_api.dto.request.CreateCourseRequest;
 import com.walid.educore_api.dto.response.CourseResponse;
 import com.walid.educore_api.entity.Course;
+import com.walid.educore_api.exception.ResourceNotFoundException;
 import com.walid.educore_api.repository.CourseRepository;
 import com.walid.educore_api.service.CourseService;
 import org.springframework.stereotype.Service;
@@ -32,30 +33,30 @@ public class CourseServiceImpl implements CourseService {
 
         Course savedCourse = courseRepository.save(course);
 
-        CourseResponse response = new CourseResponse(
-                savedCourse.getId(),
-                savedCourse.getTitle(),
-                savedCourse.getDescription(),
-                savedCourse.getCategory(),
-                savedCourse.getLevel(),
-                savedCourse.getPrice(),
-                savedCourse.getDurationHours(),
-                savedCourse.getPublished(),
-                savedCourse.getCreatedAt(),
-                savedCourse.getUpdatedAt()
-        );
-
-        return response;
+        return mapToCourseResponse(savedCourse);
     }
 
     @Override
     public List<CourseResponse> getAllCourses() {
-        return List.of();
+
+        List<Course> courses = courseRepository.findAll();
+
+        return courses.stream()
+                .map(this::mapToCourseResponse)
+                .toList();
     }
 
     @Override
     public CourseResponse getCourseById(Long id) {
-        return null;
+
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Course with ID " + id + " not found"
+                        )
+                );
+
+        return mapToCourseResponse(course);
     }
 
     @Override
@@ -68,4 +69,19 @@ public class CourseServiceImpl implements CourseService {
 
     }
 
+    private CourseResponse mapToCourseResponse(Course course) {
+
+        return new CourseResponse(
+                course.getId(),
+                course.getTitle(),
+                course.getDescription(),
+                course.getCategory(),
+                course.getLevel(),
+                course.getPrice(),
+                course.getDurationHours(),
+                course.getPublished(),
+                course.getCreatedAt(),
+                course.getUpdatedAt()
+        );
+    }
 }
