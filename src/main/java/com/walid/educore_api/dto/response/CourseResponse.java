@@ -24,6 +24,8 @@ public record CourseResponse(
 
         Boolean published,
 
+        InstructorSummaryResponse instructor,
+
         LocalDateTime createdAt,
 
         LocalDateTime updatedAt

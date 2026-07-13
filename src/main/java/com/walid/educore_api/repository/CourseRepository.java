@@ -14,5 +14,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     List<Course> findByCategory(CourseCategory category);
 
     List<Course> findByLevel(CourseLevel level);
+    
+
 
 }
